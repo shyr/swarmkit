@@ -153,7 +153,11 @@ func (r *controller) Prepare(ctx context.Context) error {
 			return exec.ErrTaskPrepared
 		}
 
-		return err
+		if r.pullErr != nil {
+			return errors.Wrap(r.pullErr, err.Error())
+		} else {
+			return err
+		}
 	}
 
 	return nil
